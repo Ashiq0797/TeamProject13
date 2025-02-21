@@ -1,0 +1,39 @@
+
+
+<!-- this is the view that WAITERS see-->
+
+<!-- shows completed orders -->
+<head>
+    <title>Waiter View</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}">
+</head>
+<body>
+    <nav class="navbar"> 
+        <div class="logo">Waiter View</div>
+        <ul class="pages">
+            <li><a href="{% url 'editMenu' %}">Edit Menu</a></li>
+            <li><a href="{% url 'staffPick' %}">Staff</a></li>
+        </ul>
+    </nav>
+
+    <h1>
+        <!-- NOTE this only shows orders with status COM -->
+        Completed orders:
+    </h1>
+    <br>    
+    
+    <!-- ideally group the same table number orders into one big box or element -->
+        <!-- {% regroup CompletedOrders by table as orders_by_table %} -->
+    <div class="waiterGrid">
+    {% for order in CompletedOrders %}
+        <div class="staff-order">
+            <div class="subGrid">
+                <p><a>Table {{ order.table }}:<br> {{ order.quantity }}X {{ order.menuItem }} <br>{{ order.timestamp|time:"H:i" }}</a></p>
+                <img src="{{ order.menuItem.image.url }}" alt="{{ order.menuItem.name }}">
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+</body>
